@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseApiService } from '../services/firebase-api.service';
 
 @Component({
   selector: 'app-cars',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CarsComponent implements OnInit {
 
-  constructor() { }
+  cars: any=[];
 
-  ngOnInit(): void {
+  constructor(public firebaseApiService: FirebaseApiService) { }
+
+  ngOnInit() {
+    this.loadCars();
+  }
+
+  loadCars() {
+    return this.firebaseApiService.getCars().subscribe((data: {}) => {
+      this.cars = data;
+    })
   }
 
 }
