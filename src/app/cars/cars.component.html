@@ -10,9 +10,9 @@
                     <h5 class="col-6 text-end">Year: {{car.year}}</h5>
                 </div>
                 <ul class="mt-2" *ngIf="car.tasks">
-                    <li *ngFor="let task of car.tasks">
+                    <li *ngFor="let task of (car.tasks)">
                         <div class="row">
-                            <p class="col-6">{{task.details}}</p>
+                            <p class="col-6">{{task}}</p>
                             <button class="col-4 btn btn-success m-1 float-right" *ngIf="!task.completed"
                                 >Complete</button>
                             <p class="col-6 text-end" *ngIf="task.completed">✔</p>

@@ -19,6 +19,7 @@ export class CarsComponent implements OnInit {
   loadCars() {
     return this.firebaseApiService.getCars().subscribe((data: {}) => {
       this.cars = data;
+      console.log(this.cars);
     })
   }
 
