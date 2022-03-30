@@ -2,16 +2,21 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders } from '@angular/common/http'
 import { Car } from '../car';
 import { Observable, throwError } from 'rxjs';
-import {retry, catchError } from 'rxjs/operators'
+import {retry, catchError, tap } from 'rxjs/operators'
+import { CarStore, CarState } from '../store/car.store';
+import { EntityStore, EntityState } from '@datorama/akita';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseApiService {
 
+  store!: CarStore;
   apiURL = 'https://us-central1-garagedb-a09fe.cloudfunctions.net';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, store: CarStore) {
+    this.store = store;
+   }
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -19,10 +24,24 @@ export class FirebaseApiService {
     })
   }
 
-  getCars(): Observable<Car> {
-    return this.http.get<Car>(this.apiURL + '/getCars')
+  getCars() {
+    return this.http.get<Car[]>(this.apiURL + '/getCars')
     .pipe(
       retry(1),
+      tap(cars =>
+        this.store.loadCars(cars, true)),
+      catchError(this.handleError)
+    )
+  }
+
+  addCar(car: Car) {
+    return this.http.post<Car>(this.apiURL + '/addCars' + '?make=' + car.make +
+     '&model=' + car.model + '&reg=' + car.reg + '&year=' + car.year + '&tasks=' + car.tasks, 
+     {title: 'car upload'})
+    .pipe(
+      retry(1),
+      tap(car =>
+        this.store.add([car])),
       catchError(this.handleError)
     )
   }
@@ -31,6 +50,20 @@ export class FirebaseApiService {
     return this.http.delete<Car>(this.apiURL + '/deleteCar' + '?id=' + car.id)
     .pipe(
       retry(1),
+      tap(car =>
+        this.store.remove(car.id)),
+      catchError(this.handleError)
+    )
+  }
+
+  updateCar(car: Car) {
+    return this.http.put<Car>(this.apiURL + '/updateCar' + '?id=' + car.id + '&make=' + car.make +
+     '&model=' + car.model + '&reg=' + car.reg + '&year=' + car.year + '&tasks=' + car.tasks, 
+     {title: 'car upload'})
+    .pipe(
+      retry(1),
+      tap(car =>
+        this.store.update([car])),
       catchError(this.handleError)
     )
   }

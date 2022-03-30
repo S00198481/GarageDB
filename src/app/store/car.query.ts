@@ -8,9 +8,9 @@ import { QueryEntity } from '@datorama/akita';
 })
 export class CarQuery extends QueryEntity<CarState> {
 
-  selectArePeopleLoaded$ = this.select(state => {
-    console.log(state.arePeopleLoaded);
-    return state.arePeopleLoaded;
+  selectAreCarsLoaded$ = this.select(state => {
+    console.log(state.areCarsLoaded);
+    return state.areCarsLoaded;
   });
 
   constructor(protected override store: CarStore) {

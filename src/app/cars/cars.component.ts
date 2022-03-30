@@ -1,35 +1,68 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FirebaseApiService } from '../services/firebase-api.service';
 import { Car } from '../car';
+import { CarQuery } from '../store/car.query';
+import { CarState } from '../store/car.store';
+import { Observable, Subscription } from 'rxjs';
+import { filter, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cars',
   templateUrl: './cars.component.html',
   styleUrls: ['./cars.component.css']
 })
-export class CarsComponent implements OnInit {
+export class CarsComponent implements OnInit, OnDestroy {
 
-  cars: any=[];
+  carToBeUpdated: Car | any;
+  isUpdateActivated = false;
+  listCarSub!: Subscription;
+  deleteCarSub!: Subscription;
+  updateCarSub!: Subscription;
+  cstate!: CarState;
+  carQuery!: CarQuery;
 
-  constructor(public firebaseApiService: FirebaseApiService) { }
+  cars$: Observable<Car[]> 
+
+
+
+  constructor(public firebaseApiService: FirebaseApiService, carQuery: CarQuery) {
+    this.carQuery = carQuery
+    this.cars$ = this.carQuery.selectAll();
+   }
 
   ngOnInit() {
-    this.loadCars();
+    this.listCarSub = this.carQuery.selectAreCarsLoaded$.pipe(
+      filter(areCarsLoaded => !areCarsLoaded),
+      switchMap(areCarsLoaded => {
+        if(!areCarsLoaded) {
+          return this.firebaseApiService.getCars()
+        } else return ''
+      })
+    ).subscribe(result => {});
   }
 
-  loadCars() {
-    return this.firebaseApiService.getCars().subscribe((data: {}) => {
-      this.cars = data;
-      console.log(this.cars);
-    })
+  ngOnDestroy() {
+    if(this.listCarSub) {
+      this.listCarSub.unsubscribe;
+    }
+    if(this.deleteCarSub) {
+      this.deleteCarSub.unsubscribe;
+    }
+    if(this.updateCarSub) {
+      this.updateCarSub.unsubscribe;
+    }
   }
 
   removeCar(car: Car) {
-    this.cars = null;
-    this.firebaseApiService.removeCar(car).subscribe((data: {}) => {
-      console.log(this.cars);
+    this.deleteCarSub = this.firebaseApiService.removeCar(car).subscribe(result => {
+      console.log(result);
     })
-    this.loadCars()
   }
 
+  updateCar() {
+    this.updateCarSub = this.firebaseApiService.updateCar(
+      this.carToBeUpdated.id).subscribe(result => console.log(result))
+    this.isUpdateActivated = false;
+    this.carToBeUpdated = null
+  }
 }

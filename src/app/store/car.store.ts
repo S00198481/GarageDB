@@ -3,12 +3,12 @@ import { Car } from '../car';
 import { ID, EntityStore, StoreConfig, EntityState } from '@datorama/akita';
 
 export interface CarState extends EntityState<Car, string> {
-  arePeopleLoaded: boolean;
+  areCarsLoaded: boolean;
 }
 
 export function createInitialState(): CarState {
   return {
-      arePeopleLoaded: false
+      areCarsLoaded: false
   };
 }
 
@@ -22,7 +22,7 @@ export class CarStore extends EntityStore<CarState> {
         super(createInitialState());
     }
 
-    loadPeople(cars: Car[], areCarsLoaded: boolean) {
+    loadCars(cars: Car[], areCarsLoaded: boolean) {
       this.set(cars);
       console.log(cars)
       this.update(state => ({
