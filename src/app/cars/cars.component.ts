@@ -19,15 +19,12 @@ export class CarsComponent implements OnInit, OnDestroy {
   deleteCarSub!: Subscription;
   updateCarSub!: Subscription;
   cstate!: CarState;
-  carQuery!: CarQuery;
 
-  cars$: Observable<Car[]> 
-
+  cars$: Observable<Car[]> =  this.carQuery.selectAll();
 
 
-  constructor(public firebaseApiService: FirebaseApiService, carQuery: CarQuery) {
-    this.carQuery = carQuery
-    this.cars$ = this.carQuery.selectAll();
+
+  constructor(public firebaseApiService: FirebaseApiService, private carQuery: CarQuery) {
    }
 
   ngOnInit() {

@@ -11,11 +11,12 @@ import { EntityStore, EntityState } from '@datorama/akita';
 })
 export class FirebaseApiService {
 
-  store!: CarStore;
+  store: CarStore;
   apiURL = 'https://us-central1-garagedb-a09fe.cloudfunctions.net';
 
   constructor(private http: HttpClient, store: CarStore) {
     this.store = store;
+    this.http = http;
    }
 
   httpOptions = {
@@ -29,8 +30,7 @@ export class FirebaseApiService {
     .pipe(
       retry(1),
       tap(cars =>
-        this.store.loadCars(cars, true)),
-      catchError(this.handleError)
+        this.store.loadCars(cars, true))
     )
   }
 
@@ -41,18 +41,17 @@ export class FirebaseApiService {
     .pipe(
       retry(1),
       tap(car =>
-        this.store.add([car])),
-      catchError(this.handleError)
+        this.store.add([car]))
     )
   }
 
   removeCar(car: Car): Observable<Car> {
+    let id = car.id
     return this.http.delete<Car>(this.apiURL + '/deleteCar' + '?id=' + car.id)
     .pipe(
-      retry(1),
-      tap(car =>
-        this.store.remove(car.id)),
-      catchError(this.handleError)
+      tap(car => {
+        this.store.remove(id);
+      })
     )
   }
 

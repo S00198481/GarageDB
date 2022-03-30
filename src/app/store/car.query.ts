@@ -9,7 +9,7 @@ import { QueryEntity } from '@datorama/akita';
 export class CarQuery extends QueryEntity<CarState> {
 
   selectAreCarsLoaded$ = this.select(state => {
-    console.log(state.areCarsLoaded);
+    //console.log(state.areCarsLoaded);
     return state.areCarsLoaded;
   });
 
