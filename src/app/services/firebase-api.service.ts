@@ -27,6 +27,14 @@ export class FirebaseApiService {
     )
   }
 
+  removeCar(car: Car): Observable<Car> {
+    return this.http.delete<Car>(this.apiURL + '/deleteCar' + '?id=' + car.id)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+
   handleError(error:any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
