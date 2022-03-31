@@ -1,1 +1,28 @@
-<p>cardetails works!</p>
+<div class="container">
+    <div class="row mt-1 p-4 rounded cardbox justify-content-md-center">
+        <div class="col-md-5 col-sm-12  mt-4 bg-light card m-2 rounded border border-dark">
+            <div class="row bg-dark card-header">
+                <h4 class="text-center text-light">{{car.make}} {{car.model}}</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <h5 class="col-6">Registration: {{car.reg}}</h5>
+                    <h5 class="col-6 text-end">Year: {{car.year}}</h5>
+                </div>
+                <ul class="mt-2" *ngIf="car.tasks">
+                    <li  *ngFor="let task of (car.tasks)">
+                        <div  class="row">
+                            <p class="col-6">{{task}}</p>
+                            <button class="col-4 btn btn-success m-1 float-right" *ngIf="!task.completed"
+                                >Complete</button>
+                            <p class="col-6 text-end" *ngIf="task.completed">✔</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="row d-flex">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
