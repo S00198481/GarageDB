@@ -5,21 +5,24 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { CardetailsComponent } from './cardetails/cardetails.component';
 import { CarsComponent } from './cars/cars.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AddcarComponent } from './addcar/addcar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     CardetailsComponent,
-    CarsComponent
+    CarsComponent,
+    AddcarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

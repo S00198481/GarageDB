@@ -35,8 +35,8 @@ export class FirebaseApiService {
   }
 
   addCar(car: Car) {
-    return this.http.post<Car>(this.apiURL + '/addCars' + '?make=' + car.make +
-     '&model=' + car.model + '&reg=' + car.reg + '&year=' + car.year + '&tasks=' + car.tasks, 
+    return this.http.post<Car>(this.apiURL + '/addCar' + '?make=' + car.make +
+     '&model=' + car.model + '&reg=' + car.reg + '&year=' + car.year + car.tasks, 
      {title: 'car upload'})
     .pipe(
       retry(1),
@@ -57,7 +57,7 @@ export class FirebaseApiService {
 
   updateCar(car: Car) {
     return this.http.put<Car>(this.apiURL + '/updateCar' + '?id=' + car.id + '&make=' + car.make +
-     '&model=' + car.model + '&reg=' + car.reg + '&year=' + car.year + '&tasks=' + car.tasks, 
+     '&model=' + car.model + '&reg=' + car.reg + '&year=' + car.year + car.tasks, 
      {title: 'car upload'})
     .pipe(
       retry(1),
