@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { Car } from '../car';
 import { FirebaseApiService } from '../services/firebase-api.service';
+import { SearchApiService } from '../services/search-api.service';
 import { CarQuery } from '../store/car.query';
 import { CarState } from '../store/car.store';
 
@@ -29,7 +30,7 @@ export class CardetailsComponent implements OnInit, OnDestroy {
 
   cars$: Observable<any> = this.carQuery.selectAll();
 
-  constructor(private route: ActivatedRoute, private firebaseApiService: FirebaseApiService, private carQuery: CarQuery) { }
+  constructor(private route: ActivatedRoute, private firebaseApiService: FirebaseApiService, private carQuery: CarQuery, private searchApi:SearchApiService) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
@@ -44,6 +45,14 @@ export class CardetailsComponent implements OnInit, OnDestroy {
         }
       });
     })
+    
+    setTimeout(() => {
+      this.searchApi.getImage((this.car.make).toLowerCase(), (this.car.model).toLowerCase()).subscribe(result => {
+        var img = document.getElementById("apiIMG")
+        console.log(result.nodeValue)
+        img?.setAttribute("src", result.URL);
+      })
+    }, 500);
     
   }
 

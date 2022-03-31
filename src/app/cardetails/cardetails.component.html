@@ -1,8 +1,9 @@
 <div class="container">
     <div class="row mt-1 p-4 rounded cardbox justify-content-md-center">
-        <div class="col-md-5 col-sm-12  mt-4 bg-light card m-2 rounded border border-dark">
+        <div class="col-md-6 col-sm-12  mt-4 bg-light card m-2 rounded border border-dark">
             <div class="row bg-dark card-header">
-                <h4 class="text-center text-light">{{car.make}} {{car.model}}</h4>
+                <img class="col-3 rounded border border-dark" alt="shits fucked m8" src="./assets/{{car.make}}.jpeg" height="150px" >
+                <h1 class="col-6 text-center text-light mt-auto">{{car.make}} {{car.model}}</h1>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -25,4 +26,7 @@
         </div>
 
     </div>
+    <div class="col-md-4 col-sm-12  mt-4 bg-light card m-2 rounded border border-dark">
+        <img id="apiIMG" src="" width="200px" height="200px">
+    </div>    
 </div>
