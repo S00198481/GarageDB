@@ -99,7 +99,7 @@ export class NgAuthService {
       .signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['cars']);
         });
         this.SetUserData(result.user);
       })

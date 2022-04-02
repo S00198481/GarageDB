@@ -1,10 +1,11 @@
 <nav class="navbar navbar-dark bg-dark navbar-expand">
     <div class="container-fluid">
 
-        <div class="navbar-header">
+        <div class="navbar-header display-inline">
             <h1 class="text-center text-light navbar-brand">GarageDB</h1>
+            <p *ngIf="ngAuthService.userState as user" class="text-light">Welcome, {{ user.displayName ? user.displayName : "User" }}</p>
         </div>
-
+        
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <a class="nav-link" routerLink="/" routerLinkActive="active">Home</a>

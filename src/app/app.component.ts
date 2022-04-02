@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FirebaseApiService } from './services/firebase-api.service';
+import { NgAuthService } from './services/ng-auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,16 +13,9 @@ export class AppComponent implements OnInit {
 
   cars: any=[];
 
-  constructor(public firebaseApiService: FirebaseApiService) { }
+  constructor(public firebaseApiService: FirebaseApiService, public ngAuthService: NgAuthService) { }
 
   ngOnInit() {
-    this.loadCars();
-  }
-
-  loadCars() {
-    return this.firebaseApiService.getCars().subscribe((data: {}) => {
-      this.cars = data;
-    })
   }
 
 }
