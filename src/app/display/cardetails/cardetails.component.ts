@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
-import { Car } from '../car';
-import { FirebaseApiService } from '../services/firebase-api.service';
-import { SearchApiService } from '../services/search-api.service';
-import { CarQuery } from '../store/car.query';
-import { CarState } from '../store/car.store';
+import { Car } from '../../car';
+import { FirebaseApiService } from '../../services/firebase-api.service';
+import { SearchApiService } from '../../services/search-api.service';
+import { CarQuery } from '../../store/car.query';
+import { CarState } from '../../store/car.store';
 
 @Component({
   selector: 'app-cardetails',

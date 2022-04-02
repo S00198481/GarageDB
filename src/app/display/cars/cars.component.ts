@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FirebaseApiService } from '../services/firebase-api.service';
-import { Car } from '../car';
-import { CarQuery } from '../store/car.query';
-import { CarState } from '../store/car.store';
+import { FirebaseApiService } from '../../services/firebase-api.service';
+import { Car } from '../../car';
+import { CarQuery } from '../../store/car.query';
+import { CarState } from '../../store/car.store';
 import { Observable, Subscription } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 
