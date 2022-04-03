@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Car } from '../car';
 import { Observable, throwError } from 'rxjs';
-import {retry, catchError, tap } from 'rxjs/operators'
+import { retry, catchError, tap } from 'rxjs/operators'
 import { CarStore, CarState } from '../store/car.store';
 import { EntityStore, EntityState } from '@datorama/akita';
-
+import { Task } from '../task';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +17,7 @@ export class FirebaseApiService {
   constructor(private http: HttpClient, store: CarStore) {
     this.store = store;
     this.http = http;
-   }
+  }
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -27,47 +27,72 @@ export class FirebaseApiService {
 
   getCars() {
     return this.http.get<Car[]>(this.apiURL + '/getCars')
-    .pipe(
-      retry(1),
-      tap(cars =>
-        this.store.loadCars(cars, true))
-    )
+      .pipe(
+        retry(1),
+        tap(cars =>
+          this.store.loadCars(cars, true))
+      )
   }
 
   addCar(car: Car) {
     return this.http.post<Car>(this.apiURL + '/addCar' + '?make=' + car.make +
-     '&model=' + car.model + '&reg=' + car.reg + '&year=' + car.year + car.tasks, 
-     {title: 'car upload'})
-    .pipe(
-      retry(1),
-      tap(car =>
-        this.store.add([car]))
-    )
+      '&model=' + car.model + '&reg=' + car.reg + '&year=' + car.year + car.tasks,
+      { title: 'car upload' })
+      .pipe(
+        retry(1),
+        tap(car =>
+          this.store.add([car]))
+      )
   }
 
   removeCar(car: Car): Observable<Car> {
     let id = car.id
     return this.http.delete<Car>(this.apiURL + '/deleteCar' + '?id=' + car.id)
-    .pipe(
-      tap(car => {
-        this.store.remove(id);
-      })
-    )
+      .pipe(
+        tap(car => {
+          this.store.remove(id);
+        })
+      )
   }
 
-  updateCar(car: Car) {
+  updateCar(car: Car, taskDone: Task) {
+    console.log(car)
+    let tasksURI: any;
+    let taskArray: string[] = []
+
+    car.tasks.forEach((task: any) => {
+      console.log(task + " " + taskDone)
+      if (task != taskDone) {
+        taskArray.push(task)
+      }
+    });
+    console.log(taskArray)
+
+    for (let j = 0; j < taskArray.length; j++) {
+      if (tasksURI = undefined) {
+        tasksURI = (tasksURI + "&tasks[" + j + "]=" + taskArray[j]);
+      }
+      else {
+        tasksURI = ("&tasks[" + j + "]=" + taskArray[j]);
+      }
+    }
+
+    if(tasksURI == undefined) {
+      tasksURI = "&tasks[0]=complete"
+    }
+
     return this.http.put<Car>(this.apiURL + '/updateCar' + '?id=' + car.id + '&make=' + car.make +
-     '&model=' + car.model + '&reg=' + car.reg + '&year=' + car.year + car.tasks, 
-     {title: 'car upload'})
-    .pipe(
-      retry(1),
-      tap(car =>
-        this.store.update([car])),
-      catchError(this.handleError)
-    )
+      '&model=' + car.model + '&year=' + car.year + '&reg=' + car.reg + tasksURI,
+      { title: 'car update' })
+      .pipe(
+        retry(1),
+        tap(car =>
+          this.store.update(car)),
+        catchError(this.handleError)
+      )
   }
 
-  handleError(error:any) {
+  handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;

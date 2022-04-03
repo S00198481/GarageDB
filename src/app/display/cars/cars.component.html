@@ -11,14 +11,22 @@
                 </div>
                 <ul class="mt-2" *ngIf="car.tasks">
                     <li  *ngFor="let task of (car.tasks)">
-                        <div  class="row">
+                        <div *ngIf="task != completed" class="row">
                             <p class="col-6">{{task}}</p>
-                            <button class="col-4 btn btn-success m-1 float-right" *ngIf="!task.completed"
-                                >Complete</button>
+                            <button class="col-4 btn btn-success m-1 float-right" (click)="updateCar(car, task)">Complete</button>
                             <p class="col-6 text-end" *ngIf="task.completed">✔</p>
                         </div>
+
+                        <div *ngIf="task == completed" class="row">
+                            <strong class="col-6">Car ready for collection</strong>
+                            <p class="col-6 text-end">✔</p>
+                        </div>
                     </li>
+                    
                 </ul>
+                <div class="mt-2" *ngIf="car.tasks.length == 0">
+                    
+                </div>
                 <div class="row d-flex">
                     <button class="col-5 btn btn-danger m-1 " routerLink="/cardetails/{{car.id}}" routerLinkActive="active" >View Details</button>
                     <button class="col-5 btn btn-danger m-1 mx-auto" (click)="removeCar(car)">Remove</button>

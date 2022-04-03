@@ -5,6 +5,7 @@ import { CarQuery } from '../../store/car.query';
 import { CarState } from '../../store/car.store';
 import { Observable, Subscription } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
+import { Task } from 'src/app/task';
 
 @Component({
   selector: 'app-cars',
@@ -19,8 +20,10 @@ export class CarsComponent implements OnInit, OnDestroy {
   deleteCarSub!: Subscription;
   updateCarSub!: Subscription;
   cstate!: CarState;
+  completed:string = "complete"
 
   cars$: Observable<Car[]> =  this.carQuery.selectAll();
+  tasksURI!: string;
 
 
 
@@ -56,9 +59,11 @@ export class CarsComponent implements OnInit, OnDestroy {
     })
   }
 
-  updateCar() {
+  updateCar(car: Car, taskDone:Task) {
+    this.carToBeUpdated = car;
+    console.log(this.carToBeUpdated.tasks)
     this.updateCarSub = this.firebaseApiService.updateCar(
-      this.carToBeUpdated.id).subscribe(result => console.log(result))
+      this.carToBeUpdated, taskDone).subscribe(result => console.log(result))
     this.isUpdateActivated = false;
     this.carToBeUpdated = null
   }
