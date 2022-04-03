@@ -13,11 +13,16 @@
                 </div>
                 <ul class="mt-2" *ngIf="car.tasks">
                     <li  *ngFor="let task of (car.tasks)">
-                        <div  class="row">
+                        <div *ngIf="task != completed" class="row">
                             <p class="col-6">{{task}}</p>
                             <button class="col-4 btn btn-success m-1 float-right" *ngIf="!task.completed"
                                 >Complete</button>
                             <p class="col-6 text-end" *ngIf="task.completed">✔</p>
+                        </div>
+
+                        <div *ngIf="task == completed" class="row">
+                            <strong class="col-6">Car ready for collection</strong>
+                            <p class="col-6 text-end">✔</p>
                         </div>
                     </li>
                 </ul>
@@ -27,7 +32,9 @@
         </div>
 
     </div>
+    <!--
     <div class="col-md-4 col-sm-12  mt-4 bg-light card m-2 rounded border border-dark">
         <img id="apiIMG" src="" width="200px" height="200px">
-    </div>    
+    </div> 
+    -->   
 </div>

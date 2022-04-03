@@ -27,7 +27,7 @@ export class CardetailsComponent implements OnInit, OnDestroy {
   deleteCarSub!: Subscription;
   updateCarSub!: Subscription;
   cstate!: CarState;
-
+  completed: string = "complete";
   cars$: Observable<any> = this.carQuery.selectAll();
 
   constructor(private route: ActivatedRoute, private firebaseApiService: FirebaseApiService, private carQuery: CarQuery, private searchApi: SearchApiService) { }
