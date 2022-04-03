@@ -30,7 +30,7 @@ export class CardetailsComponent implements OnInit, OnDestroy {
 
   cars$: Observable<any> = this.carQuery.selectAll();
 
-  constructor(private route: ActivatedRoute, private firebaseApiService: FirebaseApiService, private carQuery: CarQuery, private searchApi:SearchApiService) { }
+  constructor(private route: ActivatedRoute, private firebaseApiService: FirebaseApiService, private carQuery: CarQuery, private searchApi: SearchApiService) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
@@ -40,20 +40,20 @@ export class CardetailsComponent implements OnInit, OnDestroy {
     })
     this.cars$.subscribe(result => {
       result.forEach((element: Car) => {
-        if(element.id == this.id) {   
+        if (element.id == this.id) {
           this.car = element;
         }
       });
     })
-    
-    setTimeout(() => {
-      this.searchApi.getImage((this.car.make).toLowerCase(), (this.car.model).toLowerCase()).subscribe(result => {
-        var img = document.getElementById("apiIMG")
-        console.log(result.nodeValue)
-        img?.setAttribute("src", result.URL);
-      })
-    }, 500);
-    
+    this.searchApi.getImage((this.car.make).toLowerCase(), (this.car.model).toLowerCase()).subscribe(result => {
+      var img = document.getElementById("apiIMG")
+      console.log(result)
+      const parser = new DOMParser();
+      const xmlDOM = parser.parseFromString(result.firstChild?.textContent!,"text/xml");
+      const value = xmlDOM.getElementsByTagName("string")[0].childNodes[0].nodeValue
+      img?.setAttribute("src", value!);
+    })
+
   }
 
   ngOnDestroy(): void {
