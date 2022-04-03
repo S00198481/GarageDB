@@ -45,6 +45,7 @@ export class CardetailsComponent implements OnInit, OnDestroy {
         }
       });
     })
+    /*
     this.searchApi.getImage((this.car.make).toLowerCase(), (this.car.model).toLowerCase()).subscribe(result => {
       var img = document.getElementById("apiIMG")
       console.log(result)
@@ -53,7 +54,7 @@ export class CardetailsComponent implements OnInit, OnDestroy {
       const value = xmlDOM.getElementsByTagName("string")[0].childNodes[0].nodeValue
       img?.setAttribute("src", value!);
     })
-
+    */
   }
 
   ngOnDestroy(): void {
