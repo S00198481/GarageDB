@@ -57,7 +57,7 @@ export class FirebaseApiService {
 
   updateCar(car: Car, taskDone: Task) {
     console.log(car)
-    let tasksURI: any;
+    let tasksURI: any = "";
     let taskArray: string[] = []
 
     car.tasks.forEach((task: any) => {
@@ -69,15 +69,10 @@ export class FirebaseApiService {
     console.log(taskArray)
 
     for (let j = 0; j < taskArray.length; j++) {
-      if (tasksURI = undefined) {
-        tasksURI = (tasksURI + "&tasks[" + j + "]=" + taskArray[j]);
-      }
-      else {
-        tasksURI = ("&tasks[" + j + "]=" + taskArray[j]);
-      }
+      tasksURI = (tasksURI + "&tasks[" + j + "]=" + taskArray[j]);
     }
 
-    if(tasksURI == undefined) {
+    if(tasksURI == "") {
       tasksURI = "&tasks[0]=complete"
     }
 
@@ -86,8 +81,8 @@ export class FirebaseApiService {
       { title: 'car update' })
       .pipe(
         retry(1),
-        tap(car =>
-          this.store.update(car)),
+        tap((cars:any) =>
+          this.store.loadCars(cars, true)),
         catchError(this.handleError)
       )
   }

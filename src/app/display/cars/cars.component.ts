@@ -66,5 +66,7 @@ export class CarsComponent implements OnInit, OnDestroy {
       this.carToBeUpdated, taskDone).subscribe(result => console.log(result))
     this.isUpdateActivated = false;
     this.carToBeUpdated = null
+
+    
   }
 }
