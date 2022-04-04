@@ -1,53 +1,35 @@
-<div class="displayTable">
-    <div class="displayTableCell">
-      <div class="authBlock">
-        <h3>Register User</h3>
-  
-        <div class="formGroup">
-          <input
-            type="email"
-            class="form-control"
-            placeholder="Email Address"
-            #userEmail
-            required
-          />
+<div class="displayTable container">
+  <div class="col-md-6 offset-md-3 mt-5 mt-1 card">
+    <div class="displayTable">
+      <div class="displayTableCell">
+        <div class="authBlock">
+          <h3 class="card-header bg-dark text-light text-center">Register User</h3>
+
+          <div class="formGroup mt-2 p-2">
+            <input type="email" class="form-control" placeholder="Email Address" #userEmail required />
+          </div>
+
+          <div class="formGroup p-2">
+            <input type="password" class="form-control" placeholder="Password" #userPwd required />
+          </div>
+
+          <div class="formGroup row justify-content-md-center p-2">
+            <input type="button" class="btn btn-block btn-primary btn-block col-3" value="Sign Up"
+              (click)="ngAuthService.SignUp(userEmail.value, userPwd.value)" />
+          </div>
+
+          <div class="formGroup  row justify-content-md-center p-2">
+            <button type="button" class="btn btn-block btn-danger btn-block col-3" (click)="ngAuthService.GoogleAuth()">
+              Continue with Google
+            </button>
+          </div>
         </div>
-  
-        <div class="formGroup">
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Password"
-            #userPwd
-            required
-          />
+
+        <div class="redirectToLogin  row text-center">
+          <span>Already have an account?
+            <span class="redirect" routerLink="/sign-in">Log In</span></span>
         </div>
-  
-        <div class="formGroup">
-          <input
-            type="button"
-            class="btn btn-block btn-primary"
-            value="Sign Up"
-            (click)="ngAuthService.SignUp(userEmail.value, userPwd.value)"
-          />
-        </div>
-  
-        <div class="formGroup">
-          <button
-            type="button"
-            class="btn btn-block btn-danger"
-            (click)="ngAuthService.GoogleAuth()"
-          >
-            Continue with Google
-          </button>
-        </div>
-      </div>
-  
-      <div class="redirectToLogin">
-        <span
-          >Already have an account?
-          <span class="redirect" routerLink="/sign-in">Log In</span></span
-        >
       </div>
     </div>
   </div>
+</div>
