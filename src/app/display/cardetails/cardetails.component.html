@@ -19,7 +19,7 @@
                     <li  *ngFor="let task of (car.tasks)">
                         <div *ngIf="task != completed" class="row">
                             <p class="col-6">{{task}}</p>
-                            <button class="col-4 btn btn-success m-1 float-right" *ngIf="!task.completed"
+                            <button class="col-4 btn btn-success m-1 float-right" *ngIf="!task.completed" (click)="updateCar(car, task)"
                                 >Complete</button>
                             <p class="col-6 text-end" *ngIf="task.completed">✔</p>
                         </div>

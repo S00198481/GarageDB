@@ -78,7 +78,8 @@ export class FirebaseApiService {
     }
 
     return this.http.put<Car>(this.apiURL + '/updateCar' + '?id=' + car.id + '&make=' + car.make +
-      '&model=' + car.model + '&year=' + car.year + '&reg=' + car.reg + tasksURI,
+    '&model=' + car.model + '&reg=' + car.reg + '&year=' + car.year + '&owner=' + car.owner
+    + '&contact=' + car.contact + tasksURI,
       { title: 'car update' })
       .pipe(
         retry(1),

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { Car } from '../../car';
+import { Task } from 'src/app/task';
 import { FirebaseApiService } from '../../services/firebase-api.service';
 import { SearchApiService } from '../../services/search-api.service';
 import { CarQuery } from '../../store/car.query';
@@ -59,5 +60,14 @@ export class CardetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeSub.unsubscribe();
+  }
+
+  updateCar(car: Car, taskDone:Task) {
+    this.carToBeUpdated = car;
+    console.log(this.carToBeUpdated.tasks)
+    this.updateCarSub = this.firebaseApiService.updateCar(
+      this.carToBeUpdated, taskDone).subscribe(result => console.log(result))
+    this.isUpdateActivated = false;
+    this.carToBeUpdated = null
   }
 }
