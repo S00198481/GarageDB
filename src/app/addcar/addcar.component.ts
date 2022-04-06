@@ -26,7 +26,9 @@ export class AddcarComponent implements OnInit {
       make: new FormControl(this.car?.make, [Validators.required, Validators.minLength(2)]),
       model: new FormControl(this.car?.model),
       reg: new FormControl(this.car?.reg),
-      year: new FormControl(this.car?.year)
+      year: new FormControl(this.car?.year),
+      owner: new FormControl(this.car?.owner),
+      contact: new FormControl(this.car?.contact)
     })
   }
 
@@ -69,7 +71,7 @@ export class AddcarComponent implements OnInit {
     .subscribe({
       next: car => {
         console.log(JSON.stringify(car) + ' has been uploaded');
-        this.message = `${car.make} ${car.model} has been added to GarageDB`;
+        this.message = `${this.car?.make} ${this.car?.model} has been added to GarageDB`;
       },
       error: (err) => this.message = err
     });

@@ -36,7 +36,8 @@ export class FirebaseApiService {
 
   addCar(car: Car) {
     return this.http.post<Car>(this.apiURL + '/addCar' + '?make=' + car.make +
-      '&model=' + car.model + '&reg=' + car.reg + '&year=' + car.year + car.tasks,
+      '&model=' + car.model + '&reg=' + car.reg + '&year=' + car.year + '&owner=' + car.owner
+      + '&contact=' + car.contact + car.tasks,
       { title: 'car upload' })
       .pipe(
         retry(1),

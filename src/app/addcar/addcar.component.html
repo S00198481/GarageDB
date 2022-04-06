@@ -1,28 +1,40 @@
 <div class="col-md-6 offset-md-3 mt-5 mt-1">
     <div class="card">
+        <div *ngIf="message" id="messageBox" class="alert alert-success alert-dismissible show" role="alert">
+            <strong>Success</strong> {{message}}
+            <button type="button" class="btn-close" (click)="dismissAlert()" aria-label="Close"></button>
+        </div>
         <h4 class="card-header bg-dark text-light text-center">Upload a Car to GarageDB</h4>
         <div class="card-body">
             <form [formGroup]="carForm" (ngSubmit)="onSubmit()">
                 <h6>Please enter car details below:</h6>
                 <div class="form-group">
-                    <label for="make">Make</label>
+                    <label for="make"><strong>Make</strong></label>
                     <input id="make" type="text" formControlName="make" class="form-control" />
 
                 </div>
                 <div class="form-group">
-                    <label for="model">Model</label>
+                    <label for="model"><strong>Model</strong></label>
                     <input id="model" type="text" formControlName="model" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label for="reg">Registration</label>
+                    <label for="reg"><strong>Registration</strong></label>
                     <input id="reg" type="text" formControlName="reg" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label for="year">Year</label>
+                    <label for="year"><strong>Year</strong></label>
                     <input id="year" type="text" formControlName="year" class="form-control" />
                 </div>
+                <div class="form-group">
+                    <label for="owner"><strong>Owner Name</strong></label>
+                    <input id="owner" type="text" formControlName="owner" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="contact"><strong>Contact Number</strong></label>
+                    <input id="contact" type="text" formControlName="contact" class="form-control" />
+                </div>
                 <ul class="mt-2">
-                    <h6>Tasks:</h6>
+                    <h6><strong>Tasks:</strong></h6>
                     <li id="tasks">
                         <div class="mb-2">
                             <input id="1" type="text" class="form-control">
@@ -39,9 +51,5 @@
                 </div>
             </form>
         </div>
-    </div>
-    <div *ngIf="message" id="messageBox" class="alert alert-success alert-dismissible show" role="alert">
-        <strong>Success</strong> {{message}}
-        <button type="button" class="btn-close" (click)="dismissAlert()" aria-label="Close"></button>
     </div>
 </div>
