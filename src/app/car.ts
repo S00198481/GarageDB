@@ -5,5 +5,7 @@ export interface Car {
     model:string,
     year:number,
     reg:string,
+    owner:string,
+    contact:string,
     tasks: any
 }

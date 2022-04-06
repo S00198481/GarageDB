@@ -11,6 +11,10 @@
                     <h5 class="col-6">Registration: {{car.reg}}</h5>
                     <h5 class="col-6 text-end">Year: {{car.year}}</h5>
                 </div>
+                <div class="row">
+                    <h5 class="col-6">Owner: {{car.owner}}</h5>
+                    <h5 class="col-6 text-end">Number: {{car.contact}}</h5>
+                </div>
                 <ul class="mt-2" *ngIf="car.tasks">
                     <li  *ngFor="let task of (car.tasks)">
                         <div *ngIf="task != completed" class="row">
